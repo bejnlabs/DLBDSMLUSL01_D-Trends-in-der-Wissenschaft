@@ -1,0 +1,9 @@
+# Rohdaten und grosse Zwischenergebnisse
+arxiv-metadata-oai-snapshot.json
+*.zip
+daten/*.parquet
+modelle/
+log_*.txt
+__pycache__/
+*.pyc
+.venv*/
