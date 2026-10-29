@@ -1,5 +1,5 @@
 """
-Fallstudie Aufgabe 3 – Trends in der Wissenschaft
+Fallstudie Aufgabe 3 – Trends in der Wissenschaft (DLBDSMLUSL01_D)
 Schritt 2: Feature Engineering (TF-IDF), Dimensionsreduktion, Clustering.
 
 Voraussetzungen:
@@ -105,7 +105,7 @@ else:
 MIN_DF = 5  # Begriff muss in mind. 5 Dokumenten vorkommen
 MAX_DF = 0.5  # Begriffe in > 50 % der Dokumente sind kaum trennscharf
 MAX_FEATURES = 30_000  # Obergrenze Vokabular (Feature-Auswahl)
-NGRAMME = (1, 2)  # Einzelwörter und Bigramme ("neural network")
+NGRAMME = (1, 2)  # Einzelwörter und Bigramme
 # Dimensionsreduktion
 SVD_KOMPONENTEN = 100
 # Clustering
