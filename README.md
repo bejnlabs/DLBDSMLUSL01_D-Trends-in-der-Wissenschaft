@@ -40,7 +40,7 @@ Die Metadaten stammen aus dem Kaggle-Datensatz von Cornell University:
 https://www.kaggle.com/datasets/Cornell-University/arxiv
 
 Die Datei `arxiv-metadata-oai-snapshot.json` (rund 1,3 GB) ist nicht im Repository enthalten und muss
-vor dem ersten Lauf in den Projektordner gelegt werden. Der Datensatz wird wöchentlich aktualisiert;
+vor dem ersten Lauf in den Projektordner gelegt werden.
 Der Snapshot wurde mit Einreichungen bis zum 15.10.2026 ausgewertet. Mit einem neueren Snapshot
 weichen die Zahlen entsprechend ab.
 
