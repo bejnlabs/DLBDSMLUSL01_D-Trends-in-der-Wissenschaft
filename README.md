@@ -1,6 +1,6 @@
 # Trends in der Wissenschaft – Themencluster in arXiv-Arbeiten seit 2023
 
-Fallstudie zum Kurs DLBDSMLUSL01_D (Maschinelles Lernen: Unsupervised Learning und Feature Engineering).
+Übungs-Fallstudie zum Kurs DLBDSMLUSL01_D (Maschinelles Lernen: Unsupervised Learning und Feature Engineering).
 
 Die Skripte bilden mit TF-IDF, LSA und k-Means Themencluster aus Titeln und Abstracts aller arXiv-Arbeiten
 seit Januar 2023 und werten aus, welche Themen ihren Anteil am Gesamtbestand steigern.
@@ -13,8 +13,8 @@ Verglichen werden die Anteile im Jahr 2023 mit den letzten zwölf vollständigen
 | Thema | Anteil 2023 | Anteil zuletzt | Faktor |
 |---|---|---|---|
 | KI-Agenten | 0,74 % | 4,10 % | 5,53 |
-| Retrieval-Augmented Generation | 0,76 % | 2,60 % | 3,43 |
-| Robotik, Manipulation | 1,24 % | 2,90 % | 2,34 |
+| Retrieval und Wissensnutzung (inkl. RAG) | 0,76 % | 2,60 % | 3,43 |
+| Robotik, verkörperte KI | 1,24 % | 2,90 % | 2,34 |
 | Große Sprachmodelle | 3,02 % | 6,47 % | 2,15 |
 | Bildgenerierung, Diffusion | 2,72 % | 4,00 % | 1,47 |
 | Neuronale Netze, Graph Learning | 5,16 % | 3,12 % | 0,61 |
@@ -23,7 +23,7 @@ Verglichen werden die Anteile im Jahr 2023 mit den letzten zwölf vollständigen
 - Der Anteil der großen Sprachmodelle erreichte Mitte 2025 knapp 9 % und ist seitdem gesunken.
 - Ein sinkender Anteil heißt nicht, dass ein Thema absolut schrumpft: arXiv wuchs im Zeitraum um gut 16 % pro Jahr.
 
-Die Namen der Themen sind eine eigene Interpretation der wichtigsten Begriffe je Cluster, keine offizielle Einteilung.
+Die Namen der Themen sind eine eigene Interpretation der wichtigsten Begriffe je Cluster, keine offizielle Einteilung. Eine Sichtprüfung von je zehn zufälligen Arbeiten stützt die Namen „KI-Agenten“ (8 von 10 passend) und „Robotik“ (6 von 10); der Retrieval-Cluster ist inhaltlich breiter als Retrieval-Augmented Generation (1 von 10 eindeutig passend).
 
 ## Methode in Kürze
 
@@ -40,8 +40,8 @@ Die Metadaten stammen aus dem Kaggle-Datensatz von Cornell University:
 https://www.kaggle.com/datasets/Cornell-University/arxiv
 
 Die Datei `arxiv-metadata-oai-snapshot.json` (rund 1,3 GB) ist nicht im Repository enthalten und muss
-vor dem ersten Lauf in den Projektordner gelegt werden.
-Der Snapshot wurde mit Einreichungen bis zum 15.10.2026 ausgewertet. Mit einem neueren Snapshot
+vor dem ersten Lauf in den Projektordner gelegt werden. Der Datensatz wird wöchentlich aktualisiert;
+ausgewertet wurde der Snapshot mit Einreichungen bis zum 15.10.2026. Mit einem neueren Snapshot
 weichen die Zahlen entsprechend ab.
 
 ## Ablauf
@@ -55,16 +55,29 @@ python 02_features_clustering.py it2 35     # Iteration 2: finales Modell
 python 02_features_clustering.py it2 30     # Kontrollmodell mit gleichem k wie Iteration 1
 python 03_trends.py it2 35                  # Trendanalyse (Hauptmodell)
 python 03_trends.py it1 30                  # Trendanalyse zur Robustheitsprüfung
-python 04_vergleich_iterationen.py 30 30    # Vergleich der Iterationen
-python 05_cluster_pruefen.py it2 35         # Titel und Kategorien je Cluster zur Benennung
+python 04_vergleich_iterationen.py 30 30    # Vergleich der Iterationen bei k = 30
 ```
+
+## Sichtprüfung der Cluster
+
+Für die drei zentralen KI-Cluster (19 KI-Agenten, 34 Robotik, 20 Retrieval) wurden je zehn zufällige
+Arbeiten mit Titel und Abstract-Anfang ausgegeben und manuell bewertet (passt / teilweise / passt nicht).
+Die Auswahl entstand mit folgendem Befehl auf der in Schritt 2 gespeicherten Stichprobe:
+
+```
+python -c "import pandas as pd; d=pd.read_parquet('daten/stichprobe_mit_clustern_k35_it2.parquet'); [print(f'\n=== Cluster {c} ===\n' + '\n'.join(f'- {t}\n  {a[:250]}...' for t,a in d[d.cluster==c].sample(10, random_state=1)[['titel','abstract']].values)) for c in (19,34,20)]" > pruefung_abstracts.txt
+```
+
+Die Einzelbewertungen sind in der schriftlichen Fallstudie dokumentiert.
 
 Schritt 1 und die Zuordnung in Schritt 3 dauern je einige Minuten, die übrigen Schritte deutlich kürzer.
 
 ## Reproduzierbarkeit
 
-Stichprobe, k-Means und Teilstichproben verwenden den festen Startwert 42. Zwei unabhängige Läufe auf
-demselben Snapshot lieferten identische Ergebnisse.
+Stichprobe, k-Means und Teilstichproben verwenden den festen Startwert 42. Ein wiederholter Lauf mit
+identischen Daten und Parametern lieferte identische Ergebnisse. Das belegt, dass die Auswertung
+deterministisch ist, nicht aber ihre Stabilität gegenüber anderen Stichproben oder Startwerten.
+Bibliotheksversionen und eine Prüfsumme der Datendatei wurden nicht protokolliert.
 
 ## Ordner
 
