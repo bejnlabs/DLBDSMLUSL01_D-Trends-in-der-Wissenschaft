@@ -1,6 +1,6 @@
 # Trends in der Wissenschaft – Themencluster in arXiv-Arbeiten seit 2023
 
-Übungs-Fallstudie zum Kurs DLBDSMLUSL01_D (Maschinelles Lernen: Unsupervised Learning und Feature Engineering).
+Fallstudie zum Kurs DLBDSMLUSL01_D (Maschinelles Lernen: Unsupervised Learning und Feature Engineering).
 
 Die Skripte bilden mit TF-IDF, LSA und k-Means Themencluster aus Titeln und Abstracts aller arXiv-Arbeiten
 seit Januar 2023 und werten aus, welche Themen ihren Anteil am Gesamtbestand steigern.
@@ -39,7 +39,7 @@ Die Namen der Themen sind eine eigene Interpretation der wichtigsten Begriffe je
 Die Metadaten stammen aus dem Kaggle-Datensatz von Cornell University:
 https://www.kaggle.com/datasets/Cornell-University/arxiv
 
-Die Datei `arxiv-metadata-oai-snapshot.json` (rund 1,3 GB) ist nicht im Repository enthalten und muss
+Die Datei `arxiv-metadata-oai-snapshot.json` (rund 5,4 GB) ist nicht im Repository enthalten und muss
 vor dem ersten Lauf in den Projektordner gelegt werden. Der Datensatz wird wöchentlich aktualisiert;
 ausgewertet wurde der Snapshot mit Einreichungen bis zum 15.10.2026. Mit einem neueren Snapshot
 weichen die Zahlen entsprechend ab.
